@@ -1,14 +1,24 @@
 const express = require("express");
 const app = express();
+const socketio = require("socket.io")
+// let cors = require('cors');
 
 let broadcaster;
 const port = 4000;
 
+// app.use();
+
 const http = require("http");
 const server = http.createServer(app);
 
-const io = require("socket.io")(server);
-app.use(express.static(__dirname + "/vite-rtc/public"));
+
+
+const io = socketio(server,{
+  cors : {
+  origin : "*",
+}});
+// app.use(express.static(__dirname + "/vite-rtc/public"));
+
 
 io.sockets.on("error", e => console.log(e));
 io.sockets.on("connection", socket => {
